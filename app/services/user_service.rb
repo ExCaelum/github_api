@@ -11,8 +11,13 @@ class UserService
     parse(response)
   end
 
-  def activities
-    response = @connection.get("/users/#{@current_user.nickname}/events")
+  def repos
+    response = @connection.get("/user/repos")
+    parse(response)
+  end
+
+  def repo_commits(repo)
+    response = @connection.get("/repos/#{repo["full_name"].split("/").first}/#{repo["name"]}/commits")
     parse(response)
   end
 

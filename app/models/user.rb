@@ -15,19 +15,22 @@ class User < ActiveRecord::Base
     stars = UserService.new(self).stars
   end
 
-  def activities
-    recent_activity = UserService.new(self).activities
-    activities = recent_activity.select do |event|
-      event["type"] == "PushEvent"
+  def commits
+    formatted_commits = []
+    repos = UserService.new(self).repos
+    repos_commits = repos.map do |repo|
+      UserService.new(self).repo_commits(repo)
     end
-    format_activities(activities)
-  end
-
-  private
-
-  def format_activities(events)
-    activities = events.map do |event|
-      Activity.new(event, self).commits
+    repos_commits.map do |commits|
+      commits.find_all do |commit|
+        commit["author"]["id"] == self.uid.to_i
+      end.each do |commit|
+        formatted_commits << Commit.new(commit)
+      end
     end
+    sorted_commits = formatted_commits.sort_by do |commit|
+      commit.created_at
+    end.reverse
+    sorted_commits[0...10]
   end
 end
