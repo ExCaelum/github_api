@@ -1,0 +1,7 @@
+<h1>Welcome <%= @user.name %> </h1>
+
+<%= image_tag @user.avatar_url, size: "300x300", alt: "Profile Image" %>
+<br>
+<p>Followers: <%= @user.followers %></p>
+<p>Following: <%= @user.following %></p>
+<p>Starred Repos:  <%= @user.stars.count %> </p>
