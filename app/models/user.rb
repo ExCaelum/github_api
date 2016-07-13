@@ -14,4 +14,20 @@ class User < ActiveRecord::Base
   def stars
     stars = UserService.new(self).stars
   end
+
+  def activities
+    recent_activity = UserService.new(self).activities
+    activities = recent_activity.select do |event|
+      event["type"] == "PushEvent"
+    end
+    format_activities(activities)
+  end
+
+  private
+
+  def format_activities(events)
+    activities = events.map do |event|
+      Activity.new(event, self).commits
+    end
+  end
 end

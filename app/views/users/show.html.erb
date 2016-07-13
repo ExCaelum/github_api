@@ -5,3 +5,10 @@
 <p>Followers: <%= @user.followers %></p>
 <p>Following: <%= @user.following %></p>
 <p>Starred Repos:  <%= @user.stars.count %> </p>
+<%= @user.activities %>
+
+
+<!-- <p>Recent Activity:  <ul> <%# @user.activities.each do |activity| %>
+    <li> Repo: <%#= activity.name %>   <%#= activity.message %></li>
+  <%# end %>
+</ul></p> -->
