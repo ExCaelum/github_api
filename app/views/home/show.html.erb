@@ -1,0 +1,10 @@
+<h1> Welcome to API Curious </h1>
+<% if current_user %>
+  Hello, <%= current_user.nickname %>
+  <br>
+  <%= link_to "View Your Dashboard", dashboard_path %>
+  <br><br>
+  <%= link_to "Logout", logout_path, method: :delete %>
+<% else %>
+  <%= link_to "Github Login", github_login_path %>
+<% end %>
