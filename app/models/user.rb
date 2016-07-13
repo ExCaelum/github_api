@@ -6,13 +6,41 @@ class User < ActiveRecord::Base
       new_user.nickname           = auth_info.extra.raw_info.login
       new_user.token              = auth_info.credentials.token
       new_user.avatar_url         = auth_info.extra.raw_info.avatar_url
-      new_user.followers          = auth_info.extra.raw_info.followers
-      new_user.following          = auth_info.extra.raw_info.following
     end
   end
 
   def stars
     stars = UserService.new(self).stars
+  end
+
+  def following
+    following = UserService.new(self).following
+    formatted_following = following.map do |follow|
+      Following.new(follow)
+    end
+  end
+
+  def followers
+    followers = UserService.new(self).followers
+    formatted_followers = followers.map do |follow|
+      Follower.new(follow)
+    end
+  end
+
+  def repos
+    repos = UserService.new(self).repos
+    formatted_repos = repos.map do |repo|
+      Repository.new(repo)
+    end
+    formatted_repos
+  end
+
+  def organizations
+    organizations = UserService.new(self).organizations
+    formatted_orgs = organizations.map do |organization|
+      Organization.new(organization)
+    end
+    formatted_orgs
   end
 
   def commits
