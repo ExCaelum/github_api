@@ -5,3 +5,7 @@
 <p>Followers: <%= @user.followers %></p>
 <p>Following: <%= @user.following %></p>
 <p>Starred Repos:  <%= @user.stars.count %> </p>
+<p>Recent Commits: <ul> <% @user.commits.each do |commit| %>
+  <li> <%= commit.repo %>, <%= commit.message %> -- <%= commit.author %>, <%= commit.created_at %> </li>
+<% end %>
+</ul></p>
