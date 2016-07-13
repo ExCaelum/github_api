@@ -16,6 +16,11 @@ class UserService
     parse(response)
   end
 
+  def followers
+    response = @connection.get("/user/followers")
+    parse(response)
+  end
+
   def organizations
     response = @connection.get("/users/#{@current_user.nickname}/orgs")
     parse(response)

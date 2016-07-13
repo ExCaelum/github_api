@@ -6,7 +6,6 @@ class User < ActiveRecord::Base
       new_user.nickname           = auth_info.extra.raw_info.login
       new_user.token              = auth_info.credentials.token
       new_user.avatar_url         = auth_info.extra.raw_info.avatar_url
-      new_user.followers          = auth_info.extra.raw_info.followers
     end
   end
 
@@ -18,6 +17,13 @@ class User < ActiveRecord::Base
     following = UserService.new(self).following
     formatted_following = following.map do |follow|
       Following.new(follow)
+    end
+  end
+
+  def followers
+    followers = UserService.new(self).followers
+    formatted_followers = followers.map do |follow|
+      Follower.new(follow)
     end
   end
 
