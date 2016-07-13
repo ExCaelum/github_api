@@ -3,9 +3,17 @@
 <%= image_tag @user.avatar_url, size: "300x300", alt: "Profile Image" %>
 <br>
 <p>Followers: <%= @user.followers %></p>
-<p>Following: <%= @user.following %></p>
+<p>Following: <%= @user.following.count %></p>
 <p>Starred Repos:  <%= @user.stars.count %> </p>
 <p>Recent Commits: <ul> <% @user.commits.each do |commit| %>
   <li> <%= commit.repo %>, <%= commit.message %> -- <%= commit.author %>, <%= commit.created_at %> </li>
+<% end %>
+</ul></p>
+<p>Organizations: <ul> <% @user.organizations.each do |org| %>
+  <li> <%= org.name %>, <%= org.url %> </li>
+<% end %>
+</ul></p>
+<p>Repositories: <ul> <% @user.repos.each do |repo| %>
+  <li> <%= repo.name %>, owned by: <%= repo.owner %> -- <%= repo.url %> </li>
 <% end %>
 </ul></p>
